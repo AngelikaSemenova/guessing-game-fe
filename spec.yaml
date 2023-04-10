@@ -1,0 +1,131 @@
+openapi: 3.0.0
+
+info:
+  version: 1.0.0
+  title: Guess The Number API
+  description: API for Guess The Number game
+
+servers:
+  - url: 'http://localhost:5000'
+
+paths:
+  /current-round:
+    get:
+      summary: Get Current Round table
+      description: Returns the table with the Name, Point and Multiplier fields for the current round
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentRoundTable'
+      tags:
+        - game
+
+  /score:
+    get:
+      summary: Get My Score
+      description: Get My Score
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Score'
+      tags:
+        - game
+
+    post:
+      summary: Calculate Score
+      description: Calculates the player's total score based on the points and multiplier values submitted
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScoreRequestBody'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScoreResponse'
+      tags:
+        - game
+
+  /ranking:
+    get:
+      summary: Get Ranking table
+      description: Returns the table with the Name and Score fields for all players in the game
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RankingTable'
+      tags:
+        - game
+
+components:
+  schemas:
+
+    CurrentRoundTable:
+      type: array
+      items:
+        $ref: '#/components/schemas/CurrentRoundTableRow'
+
+    CurrentRoundTableRow:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the player
+        point:
+          type: integer
+          description: The number of points scored by the player in the current round
+        multiplier:
+          type: integer
+          description: The multiplier value used for calculating the player's score
+
+    ScoreRequestBody:
+      type: object
+      properties:
+        point:
+          type: integer
+          description: The number of points scored by the player in the current round
+        multiplier:
+          type: integer
+          description: The multiplier value used for calculating the player's score
+
+    Score:
+      type: object
+      properties:
+        score:
+          type: number
+          description: My Score
+
+    ScoreResponse:
+      type: object
+      properties:
+        roundedNumber:
+          type: number
+          description: The player's total score calculated based on the points and multiplier values submitted
+
+    RankingTable:
+      type: array
+      items:
+        $ref: '#/components/schemas/RankingTableRow'
+
+    RankingTableRow:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the player
+        score:
+          type: integer
+          description: The player's total score

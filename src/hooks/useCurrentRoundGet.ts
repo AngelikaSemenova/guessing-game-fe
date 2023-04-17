@@ -14,7 +14,7 @@ export const useCurrentRoundGet = () => {
 
   const currentRoundGet = () => {
     gameApi
-      .currentRoundGet()
+      .apiGuessTheNumberCurrentRoundGet()
       .then((response) => {
         setStateVariable(response);
       })

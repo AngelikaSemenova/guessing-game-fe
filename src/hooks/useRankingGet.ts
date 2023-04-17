@@ -14,7 +14,7 @@ export const useRankingGet = () => {
 
   const rankingDataGet = () => {
     gameApi
-      .rankingGet()
+      .apiGuessTheNumberRankingGet()
       .then((response) => {
         setStateVariable(response);
       })

@@ -11,12 +11,12 @@ export const GradientBadge = styled.div`
 `;
 
 export const BadgeText = styled.p`
-  width: 100%;
   color: #fff;
   font-size: 16px;
   font-weight: bold;
-  margin-right: 38px;
   text-align: center;
+  overflow: hidden;
+  width: 80px;
 `;
 
 export const BadgeIcon = styled.div`

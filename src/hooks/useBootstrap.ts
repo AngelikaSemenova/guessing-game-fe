@@ -5,7 +5,11 @@ import { useRankingGet } from './useRankingGet';
 import { useScorePost } from './useScorePost';
 import { CurrentRoundTableRow, RankingTableRow } from '../api';
 
-export const useBootstrap = (pointInput: number, multiplierInput: number) => {
+export const useBootstrap = (
+  pointInput: number,
+  multiplierInput: number,
+  login: boolean
+) => {
   const { stateScore, getRequest } = useScoreGet();
   const { currentRoundData } = useCurrentRoundGet();
   const { rankingData } = useRankingGet();
@@ -32,5 +36,18 @@ export const useBootstrap = (pointInput: number, multiplierInput: number) => {
     setRanking(updateRankingData);
   }, [updateStateScore, updateCurrentRoundData, updateRankingData]);
 
-  return { stateVariable, score, roundData, ranking, postRequest };
+  return {
+    stateVariable,
+    score: login ? score : 0,
+    roundData,
+    ranking: login
+      ? ranking
+      : [
+          {
+            name: '-',
+            score: 0,
+          },
+        ],
+    postRequest,
+  };
 };

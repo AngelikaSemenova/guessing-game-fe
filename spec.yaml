@@ -9,7 +9,7 @@ servers:
   - url: 'http://localhost:5000'
 
 paths:
-  /current-round:
+  /api/guess-the-number/current-round:
     get:
       summary: Get Current Round table
       description: Returns the table with the Name, Point and Multiplier fields for the current round
@@ -23,7 +23,7 @@ paths:
       tags:
         - game
 
-  /score:
+  /api/guess-the-number/score:
     get:
       summary: Get My Score
       description: Get My Score
@@ -56,7 +56,7 @@ paths:
       tags:
         - game
 
-  /ranking:
+  /api/guess-the-number/ranking:
     get:
       summary: Get Ranking table
       description: Returns the table with the Name and Score fields for all players in the game

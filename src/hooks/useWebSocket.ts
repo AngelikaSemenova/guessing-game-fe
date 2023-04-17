@@ -1,24 +1,38 @@
 import { useState, useEffect } from 'react';
 import { ChatMessage } from '../components/Chat';
 
-const ws = new WebSocket('ws://localhost:8080');
-
-const useWebSocket = (): {
+const useWebSocket = (
+  login: boolean
+): {
   message: ChatMessage | undefined;
   handleGuess: (f: ChatMessage) => void;
 } => {
   const [message, setMessage] = useState<ChatMessage | undefined>();
 
   useEffect(() => {
-    ws.onmessage = (event: MessageEvent) => {
-      const data = JSON.parse(event.data.toString());
-      setMessage(data);
+    if (login) {
+      ws.onmessage = (event: MessageEvent) => {
+        const data = JSON.parse(event.data.toString());
+        setMessage(data);
+      };
+
+      return () => {
+        ws.close();
+      };
+    }
+  }, [login]);
+
+  if (!login)
+    return {
+      message: undefined,
+      handleGuess: () => {
+        console.log('ws closed');
+      },
     };
 
-    return () => {
-      ws.close();
-    };
-  }, []);
+  const ws = new WebSocket(
+    process.env.REACT_APP_BASE_PATH || 'ws://localhost:3000/ws'
+  );
 
   const handleGuess = (f: ChatMessage) => {
     const ff = JSON.stringify(f);

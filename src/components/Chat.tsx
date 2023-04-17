@@ -50,23 +50,28 @@ const Input = styled.input`
   border-radius: 4px;
   border: none;
   padding: 0 12px;
-  background-color: black;
+  background-color: ${(props) => (props.disabled ? '#444856' : 'black')};
   color: white;
 `;
 
 const Button = styled.button`
-  background: linear-gradient(to right, #d6217f, #ee4e4a);
-  color: white;
+  background: ${(props) =>
+    props.disabled ? '#444856' : 'linear-gradient(to right, #d6217f, #ee4e4a)'};
+  color: ${(props) => (props.disabled ? '#7E849A' : '#ffffff')};
   font-size: 1rem;
   font-weight: bold;
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 4px;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
 `;
 
-export const Chat = () => {
-  const { message, handleGuess } = useWebSocket();
+interface IProps {
+  login: boolean;
+}
+
+export const Chat = ({ login }: IProps) => {
+  const { message, handleGuess } = useWebSocket(login);
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -103,8 +108,11 @@ export const Chat = () => {
           placeholder="Type your message..."
           value={inputValue}
           onChange={(event) => setInputValue(event.target.value)}
+          disabled={!login}
         />
-        <Button onClick={handleClick}>Start</Button>
+        <Button onClick={handleClick} disabled={!login}>
+          Send
+        </Button>
       </InputContainer>
     </Container>
   );

@@ -7,7 +7,7 @@ export const useScoreGet = () => {
 
   const getRequest = () => {
     gameApi
-      .scoreGet()
+      .apiGuessTheNumberScoreGet()
       .then((response) => {
         setStateScore(response?.score || '');
       })

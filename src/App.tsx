@@ -35,7 +35,7 @@ const InputContainer = styled.div`
 
 const Input = styled.input`
   height: 36px;
-  width: 200px;
+  width: 100%;
   border-radius: 4px;
   border: none;
   padding: 0 12px;
@@ -44,16 +44,19 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  background-color: #7e849a;
-  color: white;
+  background-color: ${(props) => (props.disabled ? '#444856' : '#7E849A')};
+  color: ${(props) => (props.disabled ? '#7E849A' : '#ffffff')};
   font-size: 1rem;
   font-weight: bold;
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 4px;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   width: 100%;
   min-height: 48px;
+  &:hover {
+    background-color: ${(props) => (props.disabled ? '#444856' : '#5E647B')};
+  }
 `;
 
 function App() {
@@ -63,7 +66,7 @@ function App() {
   const [login, setLogin] = useState(false);
   const [name, setName] = useState('');
   const { stateVariable, score, roundData, ranking, postRequest } =
-    useBootstrap(pointInput, multiplierInput);
+    useBootstrap(pointInput, multiplierInput, login);
 
   return (
     <>
@@ -74,7 +77,11 @@ function App() {
             <TableStyled>
               <RowWrapper>
                 {login ? (
-                  <ColWrapper>
+                  <ColWrapper
+                    style={{
+                      width: '550px',
+                    }}
+                  >
                     <RowWrapper>
                       <PointInput
                         pointInput={pointInput}
@@ -108,7 +115,11 @@ function App() {
                     </RowWrapper>
                   </ColWrapper>
                 ) : (
-                  <ColWrapper>
+                  <ColWrapper
+                    style={{
+                      width: '550px',
+                    }}
+                  >
                     <RowWrapper>
                       <ContainerWrapper>
                         <ContainerInsertWrapper
@@ -132,6 +143,7 @@ function App() {
                             onClick={() => {
                               setLogin(true);
                             }}
+                            disabled={!name}
                           >
                             Accept
                           </Button>
@@ -172,7 +184,7 @@ function App() {
                     <ChatIcon />
                   </IconWithTextComponent>
                   <ContainerInsertWrapper>
-                    <Chat />
+                    <Chat login={login} />
                   </ContainerInsertWrapper>
                 </ContainerWrapper>
               </RowWrapper>

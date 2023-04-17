@@ -49,7 +49,7 @@ const StyledSlider = styled(Slider)<StyledSliderProps>`
 
 const ControlledSlider: React.FC<Props> = ({ onChange }) => {
   const [localValue, setLocalValue] = useState<number>(1);
-  const labels = ['1x', '2x', '3x', '4x', '5x'];
+  const labels = { 0: '1x', 1: '2x', 2: '3x', 3: '4x', 4: '5x' };
 
   const handleValueChange = (value: number) => {
     setLocalValue(value);

@@ -1,10 +1,5 @@
-import {
-  VictoryLine,
-  VictoryChart,
-  VictoryTheme,
-  VictoryLabel,
-  VictoryAxis,
-} from 'victory';
+import { VictoryChart, VictoryTheme, VictoryLabel, VictoryAxis } from 'victory';
+import { VictoryLine } from 'victory-line';
 import React, { useEffect, useState } from 'react';
 
 interface IProps {
@@ -14,17 +9,20 @@ interface IProps {
 
 export const StyledLineChart: React.FC<IProps> = ({ score, slider }) => {
   const [currentValue, setCurrentValue] = useState<number>(score);
-  const [data, setData] = useState<{ x: number; y: number }[]>([
-    { x: 0, y: 0 },
-  ]);
+  const [data, setData] = useState<{ x: number; y: number }[]>([]);
 
   useEffect(() => {
     setCurrentValue(score);
-    setData([
-      { x: 1, y: 0 },
-      { x: 2, y: 0 },
-      { x: 10, y: parseFloat(String(score)) },
-    ]);
+    const nullScore = parseFloat(String(score)) === 0;
+    setData(
+      nullScore
+        ? []
+        : [
+            { x: 0, y: 0.5 },
+            { x: 1, y: 0.5 },
+            { x: 10, y: parseFloat(String(score)) },
+          ]
+    );
   }, [score]);
 
   return (
@@ -36,28 +34,25 @@ export const StyledLineChart: React.FC<IProps> = ({ score, slider }) => {
         domainPadding={{ x: 20, y: 10 }}
         theme={VictoryTheme.grayscale}
       >
-        <VictoryAxis
-          style={{ axis: { stroke: 'transparent' } }}
-          tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-        />
+        <VictoryAxis tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} />
         <VictoryAxis
           dependentAxis={true}
-          style={{ axis: { stroke: 'transparent' } }}
           tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
         />
         <VictoryLine
           style={{
-            data: { stroke: '#bf256e' },
+            data: {
+              stroke: '#bf256e',
+              strokeWidth: 8,
+              strokeLinecap: 'round',
+            },
             parent: { border: '1px solid red' },
           }}
           animate={{
-            duration: 1000,
-            onLoad: { duration: slider * 2000 },
+            duration: slider * 1000,
           }}
           data={data}
           interpolation="monotoneX"
-          labelComponent={<VictoryLabel />}
-          label="123"
         />
       </VictoryChart>
       <VictoryLabel

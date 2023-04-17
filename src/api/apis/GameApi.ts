@@ -34,7 +34,7 @@ import {
     ScoreResponseToJSON,
 } from '../models';
 
-export interface ScorePostRequest {
+export interface ApiGuessTheNumberScorePostRequest {
     scoreRequestBody: ScoreRequestBody;
 }
 
@@ -47,13 +47,13 @@ export class GameApi extends runtime.BaseAPI {
      * Returns the table with the Name, Point and Multiplier fields for the current round
      * Get Current Round table
      */
-    async currentRoundGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CurrentRoundTableRow>>> {
+    async apiGuessTheNumberCurrentRoundGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CurrentRoundTableRow>>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/current-round`,
+            path: `/api/guess-the-number/current-round`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -66,8 +66,8 @@ export class GameApi extends runtime.BaseAPI {
      * Returns the table with the Name, Point and Multiplier fields for the current round
      * Get Current Round table
      */
-    async currentRoundGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CurrentRoundTableRow>> {
-        const response = await this.currentRoundGetRaw(initOverrides);
+    async apiGuessTheNumberCurrentRoundGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CurrentRoundTableRow>> {
+        const response = await this.apiGuessTheNumberCurrentRoundGetRaw(initOverrides);
         return await response.value();
     }
 
@@ -75,13 +75,13 @@ export class GameApi extends runtime.BaseAPI {
      * Returns the table with the Name and Score fields for all players in the game
      * Get Ranking table
      */
-    async rankingGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RankingTableRow>>> {
+    async apiGuessTheNumberRankingGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<RankingTableRow>>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/ranking`,
+            path: `/api/guess-the-number/ranking`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -94,8 +94,8 @@ export class GameApi extends runtime.BaseAPI {
      * Returns the table with the Name and Score fields for all players in the game
      * Get Ranking table
      */
-    async rankingGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<RankingTableRow>> {
-        const response = await this.rankingGetRaw(initOverrides);
+    async apiGuessTheNumberRankingGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<RankingTableRow>> {
+        const response = await this.apiGuessTheNumberRankingGetRaw(initOverrides);
         return await response.value();
     }
 
@@ -103,13 +103,13 @@ export class GameApi extends runtime.BaseAPI {
      * Get My Score
      * Get My Score
      */
-    async scoreGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Score>> {
+    async apiGuessTheNumberScoreGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Score>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/score`,
+            path: `/api/guess-the-number/score`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -122,8 +122,8 @@ export class GameApi extends runtime.BaseAPI {
      * Get My Score
      * Get My Score
      */
-    async scoreGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Score> {
-        const response = await this.scoreGetRaw(initOverrides);
+    async apiGuessTheNumberScoreGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Score> {
+        const response = await this.apiGuessTheNumberScoreGetRaw(initOverrides);
         return await response.value();
     }
 
@@ -131,9 +131,9 @@ export class GameApi extends runtime.BaseAPI {
      * Calculates the player\'s total score based on the points and multiplier values submitted
      * Calculate Score
      */
-    async scorePostRaw(requestParameters: ScorePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ScoreResponse>> {
+    async apiGuessTheNumberScorePostRaw(requestParameters: ApiGuessTheNumberScorePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ScoreResponse>> {
         if (requestParameters.scoreRequestBody === null || requestParameters.scoreRequestBody === undefined) {
-            throw new runtime.RequiredError('scoreRequestBody','Required parameter requestParameters.scoreRequestBody was null or undefined when calling scorePost.');
+            throw new runtime.RequiredError('scoreRequestBody','Required parameter requestParameters.scoreRequestBody was null or undefined when calling apiGuessTheNumberScorePost.');
         }
 
         const queryParameters: any = {};
@@ -143,7 +143,7 @@ export class GameApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/score`,
+            path: `/api/guess-the-number/score`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -157,8 +157,8 @@ export class GameApi extends runtime.BaseAPI {
      * Calculates the player\'s total score based on the points and multiplier values submitted
      * Calculate Score
      */
-    async scorePost(requestParameters: ScorePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ScoreResponse> {
-        const response = await this.scorePostRaw(requestParameters, initOverrides);
+    async apiGuessTheNumberScorePost(requestParameters: ApiGuessTheNumberScorePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ScoreResponse> {
+        const response = await this.apiGuessTheNumberScorePostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

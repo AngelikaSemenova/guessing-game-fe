@@ -13,7 +13,7 @@ export const useScorePost = (point: number, multiplier: number) => {
 
   const postRequest = () => {
     gameApi
-      .scorePost({ scoreRequestBody: { point, multiplier } })
+      .apiGuessTheNumberScorePost({ scoreRequestBody: { point, multiplier } })
       .then((response) => {
         setStateVariable(response);
         getRequest();

@@ -84,6 +84,7 @@ function App() {
                   >
                     <RowWrapper>
                       <PointInput
+                        score={score}
                         pointInput={pointInput}
                         setPointInput={setPointInput}
                       />
@@ -129,21 +130,23 @@ function App() {
                             flexDirection: 'column',
                           }}
                         >
-                          <h2>Wellcome</h2>
+                          <h2>Welcome</h2>
 
                           <InputContainer>
                             <Input
                               type="text"
                               placeholder="Please insert your name..."
                               value={name}
-                              onChange={(event) => setName(event.target.value)}
+                              onChange={(event) =>
+                                setName(event.target.value.trim())
+                              }
                             />
                           </InputContainer>
                           <Button
                             onClick={() => {
                               setLogin(true);
                             }}
-                            disabled={!name}
+                            disabled={!name.trim()}
                           >
                             Accept
                           </Button>

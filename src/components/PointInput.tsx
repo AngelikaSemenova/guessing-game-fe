@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
+import { useScoreGet } from '../hooks/useScoreGet';
+import { log } from 'util';
 
 const Container = styled.div`
   display: flex;
@@ -87,16 +89,24 @@ const Input = styled.input`
 interface IProps {
   pointInput: number;
   setPointInput: React.Dispatch<React.SetStateAction<number>>;
+  score: number;
 }
 
-const PointInput = ({ pointInput, setPointInput }: IProps) => {
+const PointInput = ({ pointInput, setPointInput, score }: IProps) => {
+  const { stateScore } = useScoreGet();
+
   const handleIncrement = () => {
-    setPointInput((prevValue) => prevValue + 1);
+    setPointInput((prevValue) => {
+      const newValue = prevValue + 25;
+      return newValue <= score ? newValue : prevValue;
+    });
   };
 
   const handleDecrement = () => {
-    setPointInput((prevValue) => prevValue - 1);
+    setPointInput((prevValue) => (prevValue - 25 >= 0 ? prevValue - 25 : 0));
   };
+
+  console.log(stateScore);
 
   return (
     <Container>
@@ -108,7 +118,12 @@ const PointInput = ({ pointInput, setPointInput }: IProps) => {
         <Input
           type="number"
           value={pointInput}
-          onChange={(e) => setPointInput(parseInt(e.target.value) || 0)}
+          onChange={(e) => {
+            const newValue = parseInt(e.target.value);
+            if (newValue >= 0 && newValue <= score) {
+              setPointInput(newValue);
+            }
+          }}
         />
         <DownButton onClick={handleDecrement}>
           <FaChevronDown />

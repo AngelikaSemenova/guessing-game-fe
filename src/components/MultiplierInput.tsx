@@ -91,11 +91,15 @@ interface IProps {
 
 const NumericInput = ({ multiplierInput, setMultiplierInput }: IProps) => {
   const handleIncrement = () => {
-    setMultiplierInput((prevValue) => prevValue + 1);
+    if (multiplierInput < 10) {
+      setMultiplierInput((prevValue) => prevValue + 0.25);
+    }
   };
 
   const handleDecrement = () => {
-    setMultiplierInput((prevValue) => prevValue - 1);
+    setMultiplierInput((prevValue) =>
+      prevValue - 0.25 >= 0 ? prevValue - 0.25 : 0
+    );
   };
 
   return (
@@ -108,7 +112,13 @@ const NumericInput = ({ multiplierInput, setMultiplierInput }: IProps) => {
         <Input
           type="number"
           value={multiplierInput}
-          onChange={(e) => setMultiplierInput(parseInt(e.target.value) || 0)}
+          onChange={(e) => {
+            const value = Number(parseFloat(e.target.value).toFixed(2));
+            if (value >= 0 && value <= 10) {
+              setMultiplierInput(value || 0);
+            } else {
+            }
+          }}
         />
         <DownButton onClick={handleDecrement}>
           <FaChevronDown />

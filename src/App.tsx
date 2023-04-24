@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { theme } from './theme';
 import {
@@ -8,6 +8,7 @@ import {
   ContainerWrapper,
   GlobalStyle,
   RowWrapper,
+  RowWrapperCenter,
   TableStyled,
   TableWrapper,
   Wrapper,
@@ -26,6 +27,8 @@ import RankingIcon from './icons/RankingIcon';
 import ChatIcon from './icons/ChatIcon';
 import { Chat } from './components/Chat';
 import { useBootstrap } from './hooks/useBootstrap';
+import Stats from './components/badge/Stats';
+import moment from 'moment';
 
 const InputContainer = styled.div`
   display: flex;
@@ -75,6 +78,11 @@ function App() {
         <Wrapper>
           <TableWrapper>
             <TableStyled>
+              {!!isWinner && (
+                <RowWrapperCenter>
+                  <Stats isWinner={isWinner} />
+                </RowWrapperCenter>
+              )}
               <RowWrapper>
                 {login ? (
                   <ColWrapper

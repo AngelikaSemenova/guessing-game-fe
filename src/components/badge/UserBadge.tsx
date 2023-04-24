@@ -1,6 +1,6 @@
 import { BadgeIcon, BadgeText, GradientBadge } from './Badge';
-import CupIcon from '../../icons/CupIcon';
 import { FC } from 'react';
+import UserIcon from '../../icons/UserIcon';
 
 interface IProps {
   name: string;
@@ -10,7 +10,7 @@ export const UserBadge: FC<IProps> = ({ name }) => {
   return (
     <GradientBadge>
       <BadgeIcon>
-        <CupIcon />
+        <UserIcon />
       </BadgeIcon>
       <BadgeText>{name}</BadgeText>
     </GradientBadge>

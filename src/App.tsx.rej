@@ -1,0 +1,25 @@
+diff a/src/App.tsx b/src/App.tsx	(rejected hunks)
+@@ -64,10 +67,23 @@
+   const [multiplierInput, setMultiplierInput] = useState(0);
+   const [slider, setSlider] = useState(3);
+   const [login, setLogin] = useState<boolean>(false);
++  const [isWinner, setIsWinner] = useState<{ w: boolean; d: string }>();
+   const [name, setName] = useState('');
+   const { stateVariable, score, roundData, ranking, postRequest } =
+     useBootstrap(pointInput, multiplierInput, login);
+ 
++  useEffect(() => {
++    if (ranking && ranking.length > 1) {
++      setIsWinner({
++        w: !(
++          ranking.find(({ name, score }) => name === 'You' && score === 0) !==
++          undefined
++        ),
++        d: moment().format('HH:mm:ss.SSS'),
++      });
++    }
++  }, [ranking]);
++
+   return (
+     <>
+       <GlobalStyle />

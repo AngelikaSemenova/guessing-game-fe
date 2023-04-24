@@ -48,6 +48,14 @@ export const RowWrapper = styled.div`
   gap: 24px;
 `;
 
+export const RowWrapperCenter = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  gap: 24px;
+`;
+
 export const ContainerWrapper = styled.div`
   height: 100%;
   width: 100%;
